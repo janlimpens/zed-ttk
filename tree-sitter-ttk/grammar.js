@@ -74,31 +74,32 @@ module.exports = grammar({
       $.end_tag,
     ),
 
+    // Tags can contain attributes AND TT directives (for inline [% ... %])
     start_tag: $ => seq(
       '<',
       alias($._start_tag_name, $.tag_name),
-      repeat($.attribute),
+      repeat(choice($.attribute, $.tt_block)),
       '>',
     ),
 
     script_start_tag: $ => seq(
       '<',
       alias($._script_start_tag_name, $.tag_name),
-      repeat($.attribute),
+      repeat(choice($.attribute, $.tt_block)),
       '>',
     ),
 
     style_start_tag: $ => seq(
       '<',
       alias($._style_start_tag_name, $.tag_name),
-      repeat($.attribute),
+      repeat(choice($.attribute, $.tt_block)),
       '>',
     ),
 
     self_closing_tag: $ => seq(
       '<',
       alias($._start_tag_name, $.tag_name),
-      repeat($.attribute),
+      repeat(choice($.attribute, $.tt_block)),
       '/>',
     ),
 
