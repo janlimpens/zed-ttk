@@ -133,9 +133,27 @@ module.exports = grammar({
 
     entity: _ => /&(#([xX][0-9a-fA-F]{1,6}|[0-9]{1,5})|[A-Za-z]{1,30});?/,
 
+    // Inner text inside quoted attribute values — stop before quote or [ (for TT blocks)
+    _dq_text: _ => token(prec(-1, /[^"\[]+/)),
+    _sq_text: _ => token(prec(-1, /[^'\[]+/)),
+
     quoted_attribute_value: $ => choice(
-      seq('\'', optional(alias(/[^']+/, $.attribute_value)), '\''),
-      seq('"', optional(alias(/[^"]+/, $.attribute_value)), '"'),
+      seq(
+        '"',
+        repeat(choice(
+          $.tt_block,
+          alias($._dq_text, $.attribute_value),
+        )),
+        '"',
+      ),
+      seq(
+        "'",
+        repeat(choice(
+          $.tt_block,
+          alias($._sq_text, $.attribute_value),
+        )),
+        "'",
+      ),
     ),
 
     // Exclude % and [ from text start (TT directives)

@@ -14,4 +14,4 @@ capabilities = []
 
 [grammars.ttk]
 repository = "https://github.com/janlimpens/tree-sitter-ttk"
-rev = "997c60e019d84ed8c1aaed45cd113490c9fd40fc"
+rev = "082d6807da7efd6bc88a1ebcee97b51ad8b234f5"

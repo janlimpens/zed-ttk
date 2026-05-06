@@ -1,6 +1,6 @@
 name = "Template Toolkit"
 grammar = "ttk"
-path_suffixes = ["tt", "tt2", "ttml"]
+path_suffixes = ["tt", "tt2", "ttml", "tpl"]
 block_comment = ["[%# ", " %]"]
 line_comments = ["# "]
 autoclose_before = ">})\"'"
