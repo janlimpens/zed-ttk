@@ -74,32 +74,33 @@ module.exports = grammar({
       $.end_tag,
     ),
 
-    // Tags can contain attributes AND TT directives (for inline [% ... %])
+    // Tags can contain TT directives AND attributes
+    // tt_block MUST come first so [% is matched before [ gets parsed as attribute
     start_tag: $ => seq(
       '<',
       alias($._start_tag_name, $.tag_name),
-      repeat(choice($.attribute, $.tt_block)),
+      repeat(choice($.tt_block, $.attribute)),
       '>',
     ),
 
     script_start_tag: $ => seq(
       '<',
       alias($._script_start_tag_name, $.tag_name),
-      repeat(choice($.attribute, $.tt_block)),
+      repeat(choice($.tt_block, $.attribute)),
       '>',
     ),
 
     style_start_tag: $ => seq(
       '<',
       alias($._style_start_tag_name, $.tag_name),
-      repeat(choice($.attribute, $.tt_block)),
+      repeat(choice($.tt_block, $.attribute)),
       '>',
     ),
 
     self_closing_tag: $ => seq(
       '<',
       alias($._start_tag_name, $.tag_name),
-      repeat(choice($.attribute, $.tt_block)),
+      repeat(choice($.tt_block, $.attribute)),
       '/>',
     ),
 
@@ -126,9 +127,9 @@ module.exports = grammar({
       )),
     ),
 
-    attribute_name: _ => /[^<>\"'/=\s]+/,
+    attribute_name: _ => token(prec(-1, /[^<>"'/=\s]+/)),
 
-    attribute_value: _ => /[^<>\"'=\s]+/,
+    attribute_value: _ => /[^<>"'=\s]+/,
 
     entity: _ => /&(#([xX][0-9a-fA-F]{1,6}|[0-9]{1,5})|[A-Za-z]{1,30});?/,
 
