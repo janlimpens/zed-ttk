@@ -1,0 +1,50 @@
+[%# Test chomping modifiers %]
+
+[%- var = 'no leading whitespace' -%]
+[%- var2 = 'chomped on both sides' -%]
+[% var3 = 'normal, with spaces' %]
+[% 'side effect chomp right' -%]
+
+[% DEFAULT
+    title  = 'Default Title'
+    author = 'Unknown'
+%]
+
+[% FILTER html %]
+<p>This HTML will be escaped: <b>bold?</b></p>
+[% END %]
+
+[% WRAPPER layout.tt %]
+    [% content %]
+[% END %]
+
+[% BLOCK header %]
+<header>Site Header</header>
+[% END %]
+
+[% NEXT IF item.hidden %]
+[% LAST IF count > 100 %]
+[% RETURN unless defined result %]
+[% STOP %]
+
+[% CALL obj.method(arg1, arg2) %]
+[% GET variable %]
+[% INSERT static.html %]
+[% CLEAR %]
+[% DEBUG %]
+
+[% CONFIG
+    PRE_CHOMP  = 1
+    POST_CHOMP = 1
+%]
+
+[% META
+    title   = 'My Page'
+    author  = 'John Doe'
+    version = 1.0
+%]
+
+[% TAGS <* *> %] [%# Change delimiters %]
+[% VIEW my_view %]
+    [% BLOCK header %]...[% END %]
+[% END %]

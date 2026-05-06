@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[% page_title || 'Default Title' %]</title>
+    <link rel="stylesheet" href="[% css_url %]">
+    <style>
+        body { font-family: sans-serif; }
+    </style>
+</head>
+<body>
+    [%# This is a TT comment - it won't appear in output %]
+
+    [% PROCESS header.tt %]
+
+    <h1>[% page_title %]</h1>
+
+    [% IF user.logged_in %]
+        <p>Welcome back, [% user.name | html %]!</p>
+        <ul>
+        [% FOREACH item IN shopping_cart %]
+            <li>[% item.name %] - $[% item.price %]</li>
+        [% END %]
+        </ul>
+    [% ELSE %]
+        <p>Please <a href="/login">log in</a> to continue.</p>
+    [% END %]
+
+    [% INCLUDE footer.tt %]
+
+    [% SET items = [ 'apple', 'banana', 'cherry' ] %]
+
+    [% MACRO show_list(list) BLOCK %]
+        <ul>
+        [% FOREACH i IN list %]
+            <li>[% i %]</li>
+        [% END %]
+        </ul>
+    [% END %]
+
+    [% show_list(items) %]
+
+    [% TRY %]
+        [% INCLUDE optional.tt %]
+    [% CATCH %]
+        <p>Could not include optional template.</p>
+    [% END %]
+
+    [% SWITCH user.role %]
+    [% CASE 'admin' %]
+        <p>Admin panel link here</p>
+    [% CASE 'editor' %]
+        <p>Editor tools here</p>
+    [% CASE %]
+        <p>Standard view</p>
+    [% END %]
+
+    [% USE DBI(dsn, user, pass) %]
+    [% USE date(format = '%Y-%m-%d') %]
+
+    <p>Page generated at [% date.format %]</p>
+
+    <script>
+        console.log("[% page_title %] loaded");
+    </script>
+</body>
+</html>
