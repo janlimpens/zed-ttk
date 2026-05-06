@@ -3,7 +3,7 @@ name = "Template Toolkit"
 version = "0.1.0"
 schema_version = 1
 authors = ["Jan Limpens"]
-description = "Template Toolkit (TT) syntax highlighting for Zed. Supports .tt, .tt2, .ttml files with HTML + TT directive highlighting."
+description = "Template Toolkit syntax highlighting for Zed. Supports .tt, .tt2, .ttml with HTML + TT directives."
 repository = "https://github.com/janlimpens/zed-ttk"
 themes = []
 icon_themes = []
@@ -11,9 +11,7 @@ languages = ["languages/ttk"]
 capabilities = []
 
 [lib]
-kind = "Rust"
-version = "0.7.0"
 
 [grammars.ttk]
 repository = "https://github.com/janlimpens/tree-sitter-ttk"
-commit = "5a7526a"
+rev = "df9d55ec0473c19e0cd6bb7f36d5be80d712aa86"
