@@ -1,3 +1,5 @@
+/grammars/ttk/
 /extension.wasm
-/grammars/*.wasm
 *.wasm
+/target
+/Cargo.lock
